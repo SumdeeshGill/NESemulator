@@ -61,6 +61,5 @@ typedef struct CPU {
 void cpu_init(CPU *cpu, BUS *bus);
 void cpu_reset(CPU *cpu);
 void cpu_clock(CPU *cpu);
-void cpu_set_flag(CPU* cpu, uint8_t flag, bool value);
 
 #endif
