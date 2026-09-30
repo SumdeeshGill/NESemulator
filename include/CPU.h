@@ -24,6 +24,8 @@
 #define FLAG_V 0x40
 #define FLAG_N 0x80
 
+#define CPU_OPCODE_COUNT 256
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -46,7 +48,8 @@ typedef struct BUS BUS;
 */
 
 typedef struct CPU {
-    BUS* bus;
+    BUS *bus;
+    Instruction *instructions;
 
     uint16_t pc;
     uint16_t addr;
@@ -72,9 +75,9 @@ typedef uint8_t (*operation_func)(CPU *cpu);
 typedef uint8_t (*addressing_func)(CPU *cpu);
 
 typedef struct Instruction {
-    operation_func operation;
     addressing_func addressing;
-    
+    operation_func operation;
+    //
     uint8_t cycles;
 } Instruction;
 
@@ -106,10 +109,12 @@ uint8_t REL(CPU *cpu); uint8_t IND(CPU *cpu);
 uint8_t IZX(CPU *cpu); uint8_t IZY(CPU *cpu); 
 //--------------------------------------------
 
+
 /*
 *   Instruction operations:
 *   >
 */
+
 //-----------------------------------------------------------------------------------------
 uint8_t XXX(CPU *cpu); // catch-all NOP for illegal opcodes (no plans to implement yet).
 
@@ -130,8 +135,10 @@ uint8_t CLC(CPU *cpu); uint8_t JMP(CPU *cpu); uint8_t RTI(CPU *cpu); uint8_t TYA
 //-----------------------------------------------------------------------------------------
 
 
-void cpu_init(CPU *cpu, BUS *bus);
+void cpu_init(CPU *cpu, BUS *bus, Instruction *instructions);
 void cpu_reset(CPU *cpu);
+void cpu_instructions_init(Instruction *instructions);
+void cpu_step(CPU *cpu);
 //void cpu_clock(CPU *cpu);
 
 #endif

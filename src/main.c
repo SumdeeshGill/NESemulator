@@ -3,13 +3,14 @@
 
 int main () {
 
-    printf("Hello World!\n");
+    Instruction instructions[CPU_OPCODE_COUNT];
+    cpu_instructions_init(instructions);
 
     BUS bus;
     bus_init(&bus);
 
     CPU cpu;
-    cpu_init(&cpu, &bus);
+    cpu_init(&cpu, &bus, instructions);
 
     bus.cpu = &cpu;
 
