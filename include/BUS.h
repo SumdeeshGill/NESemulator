@@ -7,6 +7,7 @@
 #include <stdbool.h>
 
 typedef struct CPU CPU;
+typedef struct Instruction Instruction;
 typedef struct PPU PPU;
 typedef struct APU APU;
 typedef struct Cartridge Cartridge;

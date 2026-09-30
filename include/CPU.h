@@ -32,6 +32,7 @@
 #include <stdbool.h>
 
 typedef struct BUS BUS;
+typedef struct Instruction Instruction;
 
 /*
 *   CPU for the NES was based off a modified MOS-6502, specifically the Ricoh 2A03/2A07 family.
@@ -64,7 +65,6 @@ typedef struct CPU {
     uint8_t cycles_remaining;
 } CPU;
 
-
 /*
 *   Instruction type to be used by instruction and addressing table, allows the emulator to easily
 *   track cycles consumed by instruction and minimizes the need to recreate each and every opcode despite
@@ -80,7 +80,6 @@ typedef struct Instruction {
     //
     uint8_t cycles;
 } Instruction;
-
 
 /*
  * Addressing modes:

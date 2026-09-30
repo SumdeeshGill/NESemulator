@@ -10,14 +10,21 @@ void cpu_init(CPU *cpu, BUS *bus, Instruction *instructions) {
 };
 
 void cpu_reset (CPU *cpu) {
+    uint8_t low = bus_read(cpu->bus, 0xFFFC);
+    uint8_t high = bus_read(cpu->bus, 0xFFFD);
+    cpu->pc = ((uint16_t)high << 8) | low;
+
     cpu->a = 0;
     cpu->x = 0;
     cpu->y = 0;
 
+    cpu->addr = 0;
+    cpu->fetched = 0;
+
     cpu->sp = 0xFD;
     cpu->status = FLAG_I | FLAG_U;
 
-    //
+    cpu->cycles_remaining = 8;
 };
 
 void cpu_instructions_init(Instruction *instructions) {
@@ -45,6 +52,27 @@ void cpu_step(CPU *cpu) {
     // rather than integers, based on if the page boundary was crossed.)
     cpu->cycles_remaining = instruction->cycles + (extraCycles1 & extraCycles2);
 };
+
+
+// ADDRESSING MODE FUNCTIONS:
+//-----------------------------------------------
+
+uint8_t IMP(CPU *cpu) {
+    cpu->fetched = cpu->a;
+    return 0;
+};
+
+//-----------------------------------------------
+
+
+// INSTRUCTION OPERATION FUNCTIONS:
+//-----------------------------------------------
+
+uint8_t XXX(CPU *cpu) {
+    return 0;
+};
+
+//-----------------------------------------------
 
 
 // Helper functions static to this file.
