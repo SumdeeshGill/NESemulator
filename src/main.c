@@ -1,8 +1,17 @@
-#include <stdio.h>
+#include "BUS.h"
+#include "CPU.h"
 
 int main () {
 
     printf("Hello World!\n");
+
+    BUS bus;
+    bus_init(&bus);
+
+    CPU cpu;
+    cpu_init(&cpu, &bus);
+
+    bus.cpu = &cpu;
 
     return 0;
 }

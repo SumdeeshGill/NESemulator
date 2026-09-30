@@ -18,7 +18,7 @@ typedef struct Controller Controller;
 *   Address being written to determines which component is being interacted with, each
 *   component has its own address range that it "owns".
 *
-*   RAM             : 0x0000 - 0x1FFF
+*   RAM (+Mirrors)  : 0x0000 - 0x1FFF   ->   0x0000-0x07FF > 0x0800-0x0FFF > 0x1000-0x17FF > 0x1800-0x1FFF
 *   PPU Registers   : 0x2000 - 0x3FFF
 *   APU/controllers : 0x4000 - 0x4017
 *   Cartridge/other : 0x4020 - 0xFFFF
@@ -26,7 +26,7 @@ typedef struct Controller Controller;
 */
 
 typedef struct BUS {
-    uint8_t ram[2048];
+    uint8_t ram[0x10000];  // change to 2048 (2kb) after 6502 testing finishes
 
     CPU *cpu;
     PPU *ppu;
@@ -38,7 +38,7 @@ typedef struct BUS {
 
 } BUS;
 
-
+void bus_init(BUS *bus);
 uint8_t bus_read(BUS *bus, uint16_t address);
 void bus_write(BUS *bus, uint16_t address, uint8_t value);
 

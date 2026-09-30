@@ -26,11 +26,11 @@ static void cpu_set_flag(CPU* cpu, uint8_t flag, bool value) {
     }
 };
 
-static bool cpu_get_flag(CPU* cpu, uint8_t flag) {
+static bool cpu_get_flag(const CPU* cpu, uint8_t flag) {
     return (cpu->status & flag) != 0;
 };
 
 static void cpu_set_zn(CPU *cpu, uint8_t value) {
     cpu_set_flag(cpu, FLAG_Z, value == 0);
-    cpu_set_flag(cpu, FLAG_N, value & 0x80);
+    cpu_set_flag(cpu, FLAG_N, (value & 0x80) != 0);
 };
